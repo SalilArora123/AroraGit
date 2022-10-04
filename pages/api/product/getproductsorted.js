@@ -1,6 +1,7 @@
 import db from '../db'
 import * as messages from '../const';
 
+
 const getProductsSorted = (req, res) => {
     console.log("reqSorted", req.body);
     db.query(
