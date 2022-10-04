@@ -34,6 +34,7 @@ const Category = () => {
       console.log("res", res);
       setRender(!render);
     })
+    
   }
 
   return (

@@ -91,6 +91,8 @@ const productDetail = ({ result, resultProduct }) => {
 
                 )
             })}
+
+
         </div>
     )
 }

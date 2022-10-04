@@ -28,17 +28,17 @@ export const getServerSideProps = async () => {
         }
     }
 }
-
 const Shop = ({ dataAll }) => {
 
     console.log("dataAlllll", dataAll);
     const router = useRouter();
-
     const { register, reset, handleSubmit } = useForm();
+
 
     const [resultSelected, setResultSelected] = useState([]);
     const category = router.query.data;
     console.log("category", category);
+
 
     useEffect(() => {
 
@@ -50,13 +50,28 @@ const Shop = ({ dataAll }) => {
             },
             headers: { "Content-Type": "application/json" },
         }).then(res => {
-            console.log("r", res.data.data);
             setResultSelected(res.data.data);
             reset({
                 category: category ? category : "all"
             })
         })
     }, []);
+
+
+    const func = () => {
+
+        for (let i = 0; i < dataAll.length; i++) {
+            // debugger
+            if (dataAll[i].category_id == category) {
+                console.log("datAll", dataAll[i].category_name);
+                console.log("categoryyyyy", category);
+                return dataAll[i].category_name;
+            }
+
+        }
+
+    }
+
 
     const onSubmit = (data) => {
 
@@ -88,7 +103,7 @@ const Shop = ({ dataAll }) => {
         <div>
 
             <Head>
-                <title>Shop Page</title>
+                <title>{func() ? func() : "shop"}</title>
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
             </Head>
             <Navbar bg="dark" variant="dark">
@@ -103,7 +118,6 @@ const Shop = ({ dataAll }) => {
                     <form onSubmit={handleSubmit(onSubmit)}>
 
                         <select {...register("category")}>
-
                             <option value="all">All</option>
                             {dataAll.map(function (value, index) {
 
@@ -111,26 +125,30 @@ const Shop = ({ dataAll }) => {
                                     <option value={value.category_id}>{value.category_name}</option>
                                 )
                             })}
-
                         </select>
                         <input type="submit" />
                     </form>
+
                 </Container>
             </Navbar>
             <h3 style={{ fontSize: "27px", color: "red", marginLeft: "39%" }}>Products ::</h3>
+
+
             {
                 resultSelected.map(function (value, index) {
 
                     return (
-                        <div key={index} style={{ padding: "10px", borderRadius: "10px", boxShadow: "0px 0px 10px black", width: "20%", marginLeft: "442px", marginBottom: "20px" }}>
-                            {value.product_name}
-                        </div>
+
+                        <Link href={`/productdetail/${value.product_id}`}>
+                            <div key={index} style={{ padding: "10px", borderRadius: "10px", boxShadow: "0px 0px 10px black", width: "20%", marginLeft: "442px", marginBottom: "20px" }}>
+                                {value.product_name}
+                            </div>
+                        </Link>
+
                     )
                 })
             }
-
-
-
+            
 
         </div>
     )
