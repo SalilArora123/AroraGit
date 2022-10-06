@@ -20,12 +20,17 @@ export const SideBar = () => {
                                     <Accordion.Header>  Category  </Accordion.Header>
                                     <Accordion.Body>
 
+
                                         <Link to='/dashboard/category'>
                                             <ListGroup.Item>Show Category</ListGroup.Item>
                                         </Link>
-                                        
+
                                         <Link to='/dashboard/product'>
                                             <ListGroup.Item>Show Products</ListGroup.Item>
+                                        </Link>
+
+                                        <Link to='/dashboard/orders'>
+                                            <ListGroup.Item>Show Order</ListGroup.Item>
                                         </Link>
 
                                     </Accordion.Body>

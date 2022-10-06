@@ -24,6 +24,7 @@
     "react-router-dom": "^6.4.0",
     "redux": "^4.2.0",
     "redux-persist": "^6.0.0",
+    "sweetalert2": "^11.4.37",
     "tls": "^0.0.1"
   },
   "devDependencies": {
