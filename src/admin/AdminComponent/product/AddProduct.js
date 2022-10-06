@@ -11,6 +11,7 @@ const AddProduct = () => {
     const { register, handleSubmit, control, formState: { errors } } = useForm();
     const [showCategory, setShowCategory] = useState([]);
 
+
     useEffect(() => {
 
         axios({
@@ -21,7 +22,7 @@ const AddProduct = () => {
             console.log("resgetCate", res.data.data);
             setShowCategory(res.data.data);
         })
-        
+
     }, []);
 
     const onSubmit = (data) => {
@@ -48,7 +49,7 @@ const AddProduct = () => {
             }
         })
     }
-    
+
     return (
         <div>
             <form onSubmit={handleSubmit(onSubmit)}>

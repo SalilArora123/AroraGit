@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from "react-redux";
 import React, { useEffect, useState } from "react";
 import { adminActions } from "../src/store/AdminStates";
+import Swal from 'sweetalert2';
 
 export const getServerSideProps = async () => {
 
@@ -15,14 +16,23 @@ export const getServerSideProps = async () => {
         props: {
         }
     }
-
-
 }
 
 const AddCart = () => {
+
     const dispatch = useDispatch();
+    const [render, setRender] = useState(false);
     const cartAllData = useSelector(state => state.admin.cart);
+
     console.log("cartAllData", cartAllData);
+    let todayDate = new Date();
+    let sortedTodayDate = todayDate.getDate() + '-' + (todayDate.getMonth() + 1) + '-' + todayDate.getFullYear();
+    console.log("sortedDateee", sortedTodayDate);
+
+    useEffect(() => {
+
+
+    }, [render]);
 
     const addQuantity = (index, addQuant) => {
         console.log("iiiiiiiiiiii", index);
@@ -54,9 +64,10 @@ const AddCart = () => {
     }
 
     const deleteHandler = (index) => {
+        console.log("index", index);
+        dispatch(adminActions.deleteCart({
 
-        dispatch(adminActions.deleteData({
-            index: index
+            index: index,
         }))
     }
 
@@ -67,18 +78,31 @@ const AddCart = () => {
     }
 
     const orderHandler = () => {
-console.log("hello order");
+
         axios({
             method: 'post',
             url: 'http://localhost:3000/api/order/insertOrder',
-            data: cartAllData,
+            data: {
+                cartData: cartAllData,
+                date: sortedTodayDate,
+                total: totalSum()
+            },
             headers: { 'Content-Type': 'application/json' },
         }).then(response => {
             console.log("response", response);
+
+            if (response.data.status == "success") {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Your order has been placed',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
         })
 
     }
-
 
     const totalSum = () => {
         let sum = 0;
@@ -86,7 +110,6 @@ console.log("hello order");
             sum = sum + cartAllData[i].price * cartAllData[i].quantity
         }
         return sum;
-
     }
 
     return (
@@ -116,9 +139,12 @@ console.log("hello order");
 
                         <div key={index} style={{ padding: "10px", borderRadius: "10px", boxShadow: "0px 0px 10px black", width: "28%", marginLeft: "442px", marginBottom: "20px" }}>
                             <b>Name:</b>{value.name}
+                            <br></br>
                             <b> Description:</b>{value.description}
+                            <br></br>
                             <b>Price:</b>{value.price}
-                            Enter the Quantity::
+                            <br></br>
+                            <b>Enter the Quantity</b>
                             <button style={{ borderRadius: "10px", color: "white", backgroundColor: "red", border: "2px solid #cc2020" }} onClick={() => subQuantity(value.quantity, index)}>-</button>
                             &nbsp;
                             {value.quantity}

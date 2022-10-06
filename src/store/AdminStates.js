@@ -34,10 +34,11 @@ const adminSlice = createSlice({
             state.cart[action.payload.index].quantity = action.payload.quantity
         },
 
-        deleteData(state, action) {
+        
+        deleteCart(state, action) {
 
             state.cart.splice(action.payload.index, 1);
-            
+
         }
 
     }

@@ -4,6 +4,8 @@ import { Route, Routes } from 'react-router-dom';
 import Home from '../../../pages/home';
 import AddCategory from '../AddCategory';
 import EditCategory from '../AdminComponent/EditCategory';
+import Order from '../AdminComponent/Order/Order';
+import OrderItem from '../AdminComponent/Order/OrderItem';
 import AddProduct from '../AdminComponent/product/AddProduct';
 import EditProduct from '../AdminComponent/product/EditProduct';
 import Products from '../AdminComponent/product/Products';
@@ -23,6 +25,9 @@ export const ContentRoutes = () => {
       <Route path='/addproduct' element={<AddProduct />} />
       <Route path='/editproduct/:id' element={<EditProduct />} />
       <Route path="/home" element={<Home />} />
+      <Route path="/orders" element={<Order />} />
+      <Route path="/orders/orderitems/:id" element={<OrderItem/>} />
+
 
     </Routes>
 
